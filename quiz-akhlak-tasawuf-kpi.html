@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kuis Akhlak Tasawuf — Mahabbah, Fanāʾ, dan Wujūd</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0C0918;--bg2:#130F22;--bg3:#1A1530;--bg4:#110E1F;
+  --gold:#C9A227;--gold-l:#E8C84A;--gold-d:#8A6D0F;
+  --rose:#9C5E80;--rose-l:#C47FA5;--rose-d:#5A2E45;
+  --em:#1F6B4A;--em-l:#3DAF7E;--em-d:#0D3B27;
+  --sky:#2A5F8A;--sky-l:#5B9EC9;
+  --ivory:#F0E8D5;--ivory2:#D8CEB8;--muted:#7A7060;--muted2:#5A5045;
+  --card:rgba(255,255,255,0.04);--cardb:rgba(255,255,255,0.08);
+  --gold-b:rgba(201,162,39,0.25);--rose-b:rgba(156,94,128,0.25);--em-b:rgba(31,107,74,0.25);
+  --correct:rgba(31,107,74,0.15);--correct-b:rgba(61,175,126,0.4);
+  --wrong:rgba(180,50,50,0.12);--wrong-b:rgba(220,80,80,0.35);
+  --neutral:rgba(42,95,138,0.1);
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ivory);font-family:'Lora',Georgia,serif;min-height:100vh;overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Playfair Display',Georgia,serif}
+
+/* ARABESQUE */
+.pattern-bg{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    radial-gradient(ellipse 60% 40% at 15% 85%, rgba(201,162,39,0.05) 0%,transparent 60%),
+    radial-gradient(ellipse 50% 50% at 85% 15%, rgba(156,94,128,0.05) 0%,transparent 60%),
+    radial-gradient(ellipse 40% 30% at 50% 50%, rgba(31,107,74,0.03) 0%,transparent 70%)}
+.pattern-svg{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.035;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cg fill='none' stroke='%23C9A227' stroke-width='0.8'%3E%3Cpolygon points='60,10 110,35 110,85 60,110 10,85 10,35'/%3E%3Cpolygon points='60,25 95,42 95,78 60,95 25,78 25,42'/%3E%3Ccircle cx='60' cy='60' r='12'/%3E%3C/g%3E%3C/svg%3E");
+  background-size:120px 120px}
+
+/* LAYOUT */
+.wrapper{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
+
+/* HEADER */
+.quiz-header{text-align:center;margin-bottom:3rem;padding-bottom:2rem;
+  border-bottom:1px solid var(--cardb)}
+.ornament{width:50px;height:50px;margin:0 auto 1.2rem;opacity:.5}
+.course-label{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--muted);font-style:italic;margin-bottom:.7rem}
+.quiz-title{font-size:clamp(1.6rem,3vw,2.6rem);color:var(--ivory);line-height:1.2;margin-bottom:.4rem}
+.quiz-title span{color:var(--gold)}
+.quiz-subtitle{font-size:.95rem;color:var(--ivory2);font-style:italic;margin-bottom:1.2rem}
+.meta-row{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;margin-top:1rem}
+.badge{display:inline-block;padding:.22rem .75rem;border-radius:20px;
+  font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;font-family:'Lora',serif}
+.badge-rose{background:rgba(156,94,128,0.15);color:var(--rose-l);border:1px solid var(--rose-b)}
+.badge-gold{background:rgba(201,162,39,0.12);color:var(--gold-l);border:1px solid var(--gold-b)}
+.badge-em{background:rgba(31,107,74,0.12);color:var(--em-l);border:1px solid var(--em-b)}
+.badge-sky{background:rgba(42,95,138,0.12);color:var(--sky-l);border:1px solid rgba(91,158,201,0.25)}
+.badge-muted{background:var(--card);color:var(--muted);border:1px solid var(--cardb)}
+.gold-line{width:3rem;height:1.5px;background:var(--gold);margin:.8rem auto;opacity:.6}
+
+/* PETUNJUK */
+.petunjuk{background:rgba(42,95,138,0.07);border:1px solid rgba(91,158,201,0.2);
+  border-radius:12px;padding:1.2rem 1.5rem;margin-bottom:2.5rem}
+.petunjuk h3{font-size:.85rem;color:var(--sky-l);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.7rem}
+.petunjuk ul{list-style:none;display:flex;flex-direction:column;gap:.35rem}
+.petunjuk li{font-size:.84rem;color:var(--ivory2);line-height:1.6;padding-left:1.2rem;position:relative}
+.petunjuk li::before{content:'◈';position:absolute;left:0;color:var(--sky-l);font-size:.6rem;top:.25rem}
+
+/* IDENTITAS */
+.id-card{background:var(--bg2);border:1px solid var(--cardb);border-radius:14px;
+  padding:1.5rem 1.8rem;margin-bottom:2.5rem}
+.id-card h3{font-size:1rem;color:var(--gold);margin-bottom:1rem;
+  letter-spacing:.04em;text-transform:uppercase;font-family:'Lora',serif}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.form-group{display:flex;flex-direction:column;gap:.4rem}
+.form-group.full{grid-column:1/-1}
+label{font-size:.75rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+input,select,textarea{
+  background:rgba(255,255,255,0.04);border:1px solid var(--cardb);
+  border-radius:8px;padding:.6rem .9rem;color:var(--ivory);font-family:'Lora',serif;
+  font-size:.88rem;outline:none;transition:border-color .2s;width:100%}
+input:focus,select:focus,textarea:focus{border-color:var(--gold-b);
+  background:rgba(201,162,39,0.04)}
+input::placeholder,textarea::placeholder{color:var(--muted2)}
+select option{background:#130F22;color:var(--ivory)}
+textarea{resize:vertical;min-height:100px;line-height:1.7}
+
+/* SECTION */
+.section-block{margin-bottom:2.5rem}
+.section-head{display:flex;align-items:center;gap:.8rem;margin-bottom:1.4rem;
+  padding-bottom:.7rem;border-bottom:1px solid var(--cardb)}
+.sec-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-size:.75rem;font-weight:600;flex-shrink:0;
+  font-family:'Lora',serif}
+.sec-num-gold{background:rgba(201,162,39,0.12);border:1px solid var(--gold-b);color:var(--gold-l)}
+.sec-num-rose{background:rgba(156,94,128,0.12);border:1px solid var(--rose-b);color:var(--rose-l)}
+.sec-num-em{background:rgba(31,107,74,0.12);border:1px solid var(--em-b);color:var(--em-l)}
+.sec-num-sky{background:rgba(42,95,138,0.12);border:1px solid rgba(91,158,201,0.25);color:var(--sky-l)}
+.sec-num-muted{background:var(--card);border:1px solid var(--cardb);color:var(--muted)}
+.sec-info h2{font-size:1rem;color:var(--ivory);font-family:'Lora',serif;font-weight:500}
+.sec-info p{font-size:.75rem;color:var(--muted);margin-top:.1rem}
+
+/* QUESTION CARD */
+.q-card{background:var(--bg2);border:1px solid var(--cardb);border-radius:12px;
+  padding:1.3rem 1.5rem;margin-bottom:1rem;transition:border-color .3s}
+.q-card.answered-correct{border-color:var(--correct-b);background:rgba(31,107,74,0.06)}
+.q-card.answered-wrong{border-color:var(--wrong-b);background:rgba(180,50,50,0.05)}
+.q-num{font-size:.68rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;
+  margin-bottom:.5rem}
+.q-text{font-size:.92rem;color:var(--ivory);line-height:1.75;margin-bottom:.95rem}
+.q-text em{color:var(--gold-l);font-style:italic}
+.q-text strong{color:var(--ivory);font-weight:500}
+
+/* OPTIONS */
+.options{display:flex;flex-direction:column;gap:.45rem}
+.opt{display:flex;align-items:flex-start;gap:.75rem;padding:.65rem .9rem;
+  border-radius:8px;border:1px solid var(--cardb);background:rgba(255,255,255,0.02);
+  cursor:pointer;transition:all .18s;position:relative}
+.opt:hover{border-color:var(--gold-b);background:rgba(201,162,39,0.04)}
+.opt input[type=radio]{display:none}
+.opt-letter{width:22px;height:22px;border-radius:50%;border:1px solid var(--cardb);
+  display:flex;align-items:center;justify-content:center;font-size:.68rem;
+  color:var(--muted);flex-shrink:0;margin-top:.05rem;transition:all .2s}
+.opt-text{font-size:.85rem;color:var(--ivory2);line-height:1.55}
+
+/* Selected state */
+.opt.selected{border-color:var(--gold-b);background:rgba(201,162,39,0.07)}
+.opt.selected .opt-letter{background:var(--gold);border-color:var(--gold);color:#0C0918;font-weight:700}
+.opt.selected .opt-text{color:var(--ivory)}
+
+/* Feedback states (after submit) */
+.opt.correct-ans{border-color:var(--correct-b)!important;background:var(--correct)!important}
+.opt.correct-ans .opt-letter{background:var(--em-l)!important;border-color:var(--em-l)!important;color:#0C0918!important}
+.opt.correct-ans .opt-text{color:var(--em-l)!important}
+.opt.wrong-ans{border-color:var(--wrong-b)!important;background:var(--wrong)!important}
+.opt.wrong-ans .opt-letter{background:#DC5050!important;border-color:#DC5050!important;color:#fff!important}
+.opt.wrong-ans .opt-text{color:#E88080!important;text-decoration:line-through}
+.opt.disabled{cursor:not-allowed;pointer-events:none}
+
+/* FEEDBACK MSG */
+.q-feedback{margin-top:.75rem;padding:.6rem .9rem;border-radius:8px;
+  font-size:.8rem;line-height:1.55;display:none}
+.q-feedback.show{display:block}
+.q-feedback.fb-correct{background:rgba(31,107,74,0.12);border-left:2px solid var(--em-l);
+  color:var(--em-l)}
+.q-feedback.fb-wrong{background:rgba(180,50,50,0.1);border-left:2px solid #DC5050;color:#E88080}
+
+/* ESSAY */
+.essay-label{font-size:.78rem;color:var(--muted);letter-spacing:.06em;margin-bottom:.5rem;display:block}
+.essay-note{font-size:.75rem;color:var(--muted2);font-style:italic;margin-top:.4rem}
+
+/* SUBMIT AREA */
+.submit-area{background:var(--bg2);border:1px solid var(--cardb);border-radius:14px;
+  padding:1.5rem 1.8rem;margin-top:1rem}
+.submit-area h3{font-size:1rem;color:var(--gold);margin-bottom:.5rem;font-family:'Lora',serif;font-weight:500}
+.submit-area p{font-size:.84rem;color:var(--ivory2);line-height:1.6;margin-bottom:1.2rem}
+.btn-row{display:flex;gap:.8rem;flex-wrap:wrap}
+.btn{padding:.65rem 1.5rem;border-radius:8px;border:none;cursor:pointer;
+  font-family:'Lora',serif;font-size:.88rem;font-weight:500;transition:all .2s;letter-spacing:.02em}
+.btn-primary{background:linear-gradient(135deg,var(--gold-d),var(--gold));color:#0C0918}
+.btn-primary:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.btn-secondary{background:var(--card);border:1px solid var(--cardb);color:var(--ivory2)}
+.btn-secondary:hover{border-color:var(--gold-b);color:var(--gold)}
+
+/* SCORE PANEL */
+#score-panel{display:none;background:var(--bg2);border:1px solid var(--gold-b);
+  border-radius:16px;padding:2rem;margin-top:2rem;text-align:center}
+#score-panel.show{display:block}
+.score-ornament{font-size:2.5rem;margin-bottom:.8rem}
+.score-grade{font-size:3.5rem;font-weight:700;color:var(--gold);font-family:'Playfair Display',serif}
+.score-label{font-size:.85rem;color:var(--muted);margin-bottom:1rem;letter-spacing:.05em;text-transform:uppercase}
+.score-detail{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.2rem 0}
+.score-box{background:var(--card);border:1px solid var(--cardb);border-radius:10px;padding:.9rem}
+.score-box .val{font-size:1.4rem;color:var(--ivory);font-weight:600;font-family:'Playfair Display',serif}
+.score-box .lbl{font-size:.68rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-top:.2rem}
+.score-msg{font-size:.92rem;color:var(--ivory2);line-height:1.7;margin:.8rem 0;font-style:italic}
+.score-note{font-size:.8rem;color:var(--muted);margin-top:1rem;line-height:1.6;
+  padding-top:.8rem;border-top:1px solid var(--cardb)}
+
+/* FORMSPREE NOTE */
+.form-note{background:rgba(42,95,138,0.07);border:1px solid rgba(91,158,201,0.2);
+  border-radius:10px;padding:.9rem 1.1rem;margin-top:1rem;font-size:.8rem;
+  color:var(--sky-l);line-height:1.6}
+.form-note strong{color:var(--sky-l)}
+.form-note a{color:var(--sky-l);opacity:.8}
+
+/* PROGRESS BAR */
+.progress-wrap{position:fixed;top:0;left:0;right:0;z-index:100;height:3px;background:rgba(255,255,255,0.05)}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--gold-d),var(--gold-l));
+  transition:width .4s ease;width:0%}
+
+/* STICKY TOP NAV */
+.sticky-nav{position:sticky;top:0;z-index:50;background:rgba(12,9,24,0.92);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--cardb);
+  padding:.6rem 1.5rem;display:flex;justify-content:space-between;align-items:center}
+.sticky-nav .stitle{font-size:.75rem;color:var(--gold);letter-spacing:.08em;text-transform:uppercase}
+.sticky-nav .scounter{font-size:.72rem;color:var(--muted);letter-spacing:.06em}
+#answered-counter{color:var(--gold-l)}
+
+/* DIVIDER */
+.section-divider{height:1px;background:linear-gradient(90deg,transparent,var(--cardb),transparent);
+  margin:2rem 0}
+
+/* Responsive */
+@media(max-width:680px){
+  .form-grid{grid-template-columns:1fr}
+  .score-detail{grid-template-columns:1fr 1fr}
+  .wrapper{padding:1.5rem 1rem 4rem}
+  .btn-row{flex-direction:column}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<!-- PROGRESS BAR -->
+<div class="progress-wrap"><div class="progress-fill" id="progressFill"></div></div>
+
+<!-- STICKY NAV -->
+<div class="sticky-nav">
+  <span class="stitle">Kuis Akhlak Tasawuf</span>
+  <span class="scounter">Terjawab: <span id="answered-counter">0</span>/20</span>
+</div>
+
+<div class="pattern-bg"></div>
+<div class="pattern-svg"></div>
+
+<div class="wrapper">
+
+  <!-- ===== HEADER ===== -->
+  <div class="quiz-header">
+    <svg class="ornament" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="50,5 90,25 95,70 60,95 15,80 5,35" fill="none" stroke="#C9A227" stroke-width="1.2"/>
+      <polygon points="50,18 78,30 82,65 57,84 24,73 18,40" fill="none" stroke="#C9A227" stroke-width="0.7" opacity=".6"/>
+      <circle cx="50" cy="50" r="8" fill="none" stroke="#C9A227" stroke-width="0.8" opacity=".5"/>
+      <circle cx="50" cy="50" r="2" fill="#C9A227" opacity=".4"/>
+    </svg>
+    <p class="course-label">Mata Kuliah Akhlak Tasawuf &nbsp;|&nbsp; Prodi Komunikasi Penyiaran Islam</p>
+    <h1 class="quiz-title"><span>Mahabbah</span>, Fanāʾ, dan Wujūd:<br>Dimensi Esoterik dalam Tradisi Tasawuf Islam</h1>
+    <p class="quiz-subtitle">Evaluasi Pemahaman Mahasiswa</p>
+    <div class="gold-line"></div>
+    <div class="meta-row">
+      <span class="badge badge-rose">20 Pilihan Ganda</span>
+      <span class="badge badge-gold">3 Soal Essay</span>
+      <span class="badge badge-em">Skor Otomatis (PG)</span>
+      <span class="badge badge-muted">STAI Dr. KH. EZ. Muttaqien Purwakarta</span>
+    </div>
+  </div>
+
+  <!-- ===== PETUNJUK ===== -->
+  <div class="petunjuk">
+    <h3>Petunjuk Pengerjaan</h3>
+    <ul>
+      <li>Isi identitas diri terlebih dahulu sebelum mengerjakan soal.</li>
+      <li>Soal pilihan ganda (1–20): pilih satu jawaban yang paling tepat. Skor otomatis dihitung setelah submit.</li>
+      <li>Soal essay (A–C): isi dengan uraian yang jelas, sistematis, dan berbasis referensi materi kuliah.</li>
+      <li>Tekan <strong>Periksa &amp; Kirim Jawaban</strong> setelah seluruh soal dijawab. Jawaban tidak dapat diubah setelah dikirim.</li>
+      <li>Hasil skor akan tampil di halaman ini. Gunakan tombol <strong>Cetak/Simpan PDF</strong> untuk menyimpan.</li>
+    </ul>
+  </div>
+
+  <!-- ===== IDENTITAS ===== -->
+  <div class="id-card">
+    <h3>Identitas Mahasiswa</h3>
+    <div class="form-grid">
+      <div class="form-group full">
+        <label for="nama">Nama Lengkap</label>
+        <input type="text" id="nama" name="nama" placeholder="Nama sesuai KTM..." required>
+      </div>
+      <div class="form-group">
+        <label for="nim">NIM</label>
+        <input type="text" id="nim" name="nim" placeholder="Nomor Induk Mahasiswa...">
+      </div>
+      <div class="form-group">
+        <label for="kelas">Kelas / Semester</label>
+        <input type="text" id="kelas" name="kelas" placeholder="Contoh: KPI-B / Semester 3">
+      </div>
+      <div class="form-group full">
+        <label for="tanggal">Tanggal Pengerjaan</label>
+        <input type="date" id="tanggal" name="tanggal">
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION I: BAHASA CINTA SEBAGAI EPISTEMOLOGI                 -->
+  <!-- ============================================================ -->
+  <div class="section-block">
+    <div class="section-head">
+      <div class="sec-num sec-num-rose">I</div>
+      <div class="sec-info">
+        <h2>Bahasa Cinta sebagai Epistemologi</h2>
+        <p>Soal 1 – 4 &nbsp;|&nbsp; 4 poin</p>
+      </div>
+    </div>
+
+    <!-- Q1 -->
+    <div class="q-card" id="qc-1">
+      <p class="q-num">Soal 01</p>
+      <p class="q-text">Dalam tradisi tasawuf, istilah <em>lughah al-mahabbah</em> mengacu pada...</p>
+      <div class="options" id="opts-1">
+        <label class="opt" onclick="selectOpt(this,1,'A')">
+          <input type="radio" name="q1" value="A">
+          <span class="opt-letter">A</span>
+          <span class="opt-text">Bahasa Arab klasik yang digunakan para ulama dalam penulisan kitab fikih</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,1,'B')">
+          <input type="radio" name="q1" value="B">
+          <span class="opt-letter">B</span>
+          <span class="opt-text">Sistem semiotik tersendiri dalam khazanah tasawuf di mana kata-kata seperti "surga," "anggur," atau "kekasih" tidak dapat dibaca secara harfiah</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,1,'C')">
+          <input type="radio" name="q1" value="C">
+          <span class="opt-letter">C</span>
+          <span class="opt-text">Dialek bahasa Persia yang banyak digunakan para sufi Khorasan</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,1,'D')">
+          <input type="radio" name="q1" value="D">
+          <span class="opt-letter">D</span>
+          <span class="opt-text">Kumpulan doa-doa cinta yang diucapkan dalam ritual zikir malam</span>
+        </label>
+      </div>
+      <div class="q-feedback" id="fb-1"></div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="q-card" id="qc-2">
+      <p class="q-num">Soal 02</p>
+      <p class="q-text">Dalam teks tasawuf, terdapat tiga lapisan makna. Urutan yang benar dari lapisan <strong>paling luar menuju paling dalam</strong> adalah...</p>
+      <div class="options" id="opts-2">
+        <label class="opt" onclick="selectOpt(this,2,'A')">
+          <input type="radio" name="q2" value="A">
+          <span class="opt-letter">A</span>
+          <span class="opt-text">Isyari → Batin → Zahir</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,2,'B')">
+          <input type="radio" name="q2" value="B">
+          <span class="opt-letter">B</span>
+          <span class="opt-text">Zahir → Batin → Isyari</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,2,'C')">
+          <input type="radio" name="q2" value="C">
+          <span class="opt-letter">C</span>
+          <span class="opt-text">Batin → Zahir → Isyari</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,2,'D')">
+          <input type="radio" name="q2" value="D">
+          <span class="opt-letter">D</span>
+          <span class="opt-text">Zahir → Isyari → Batin</span>
+        </label>
+      </div>
+      <div class="q-feedback" id="fb-2"></div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="q-card" id="qc-3">
+      <p class="q-num">Soal 03</p>
+      <p class="q-text">Syair Rabi'ah tentang neraka dan surga dalam konteks kajian bahasa cinta dipahami sebagai...</p>
+      <div class="options" id="opts-3">
+        <label class="opt" onclick="selectOpt(this,3,'A')">
+          <input type="radio" name="q3" value="A">
+          <span class="opt-letter">A</span>
+          <span class="opt-text">Penolakan terhadap eksistensi surga dan neraka sebagai realitas teologis Islam</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,3,'B')">
+          <input type="radio" name="q3" value="B">
+          <span class="opt-letter">B</span>
+          <span class="opt-text">Geografi teologis yang menggambarkan lokasi fisik kehidupan akhirat</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,3,'C')">
+          <input type="radio" name="q3" value="C">
+          <span class="opt-letter">C</span>
+          <span class="opt-text">Metafora relasional yang menggambarkan kualitas dan kemurnian cinta kepada Allah</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,3,'D')">
+          <input type="radio" name="q3" value="D">
+          <span class="opt-letter">D</span>
+          <span class="opt-text">Ungkapan kekecewaan Rabi'ah terhadap sistem reward-punishment dalam agama</span>
+        </label>
+      </div>
+      <div class="q-feedback" id="fb-3"></div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="q-card" id="qc-4">
+      <p class="q-num">Soal 04</p>
+      <p class="q-text">QS. Al-Hadid [57]: 3 yang menyebut Allah sebagai <em>al-Ẓāhir</em> dan <em>al-Bāṭin</em> digunakan dalam materi ini untuk menunjukkan bahwa...</p>
+      <div class="options" id="opts-4">
+        <label class="opt" onclick="selectOpt(this,4,'A')">
+          <input type="radio" name="q4" value="A">
+          <span class="opt-letter">A</span>
+          <span class="opt-text">Dimensi batin dari realitas diakui oleh Al-Quran sendiri, membuka pintu tafsir isyari</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,4,'B')">
+          <input type="radio" name="q4" value="B">
+          <span class="opt-letter">B</span>
+          <span class="opt-text">Allah hanya dapat dikenal melalui akal dan logika diskursif</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,4,'C')">
+          <input type="radio" name="q4" value="C">
+          <span class="opt-letter">C</span>
+          <span class="opt-text">Pengetahuan lahir dan batin adalah dua wilayah yang sepenuhnya terpisah dan tidak boleh dicampur</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,4,'D')">
+          <input type="radio" name="q4" value="D">
+          <span class="opt-letter">D</span>
+          <span class="opt-text">Tasawuf adalah satu-satunya cara yang sah untuk memahami Al-Quran</span>
+        </label>
+      </div>
+      <div class="q-feedback" id="fb-4"></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION II: MAHABBAH & RABI'AH                              -->
+  <!-- ============================================================ -->
+  <div class="section-block">
+    <div class="section-head">
+      <div class="sec-num sec-num-rose">II</div>
+      <div class="sec-info">
+        <h2>Mahabbah Ilahiyah &amp; Rabi'ah al-'Adawiyah</h2>
+        <p>Soal 5 – 10 &nbsp;|&nbsp; 6 poin</p>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="q-card" id="qc-5">
+      <p class="q-num">Soal 05</p>
+      <p class="q-text">Menurut Al-Ghazali dalam <em>Ihya' 'Ulum al-Din</em>, pengertian mahabbah adalah...</p>
+      <div class="options" id="opts-5">
+        <label class="opt" onclick="selectOpt(this,5,'A')">
+          <input type="radio" name="q5" value="A">
+          <span class="opt-letter">A</span>
+          <span class="opt-text">Hilangnya kesadaran diri dalam lautan keesaan Allah secara total dan permanen</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,5,'B')">
+          <input type="radio" name="q5" value="B">
+          <span class="opt-letter">B</span>
+          <span class="opt-text">Kecenderungan (mayl) jiwa kepada sesuatu yang menyenangkan; bila sempurna disebut mahabbah, bila melampaui batas disebut 'isyq</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,5,'C')">
+          <input type="radio" name="q5" value="C">
+          <span class="opt-letter">C</span>
+          <span class="opt-text">Ibadah yang dilakukan semata-mata untuk memperoleh pahala dan surga Allah</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,5,'D')">
+          <input type="radio" name="q5" value="D">
+          <span class="opt-letter">D</span>
+          <span class="opt-text">Asal-usul Wujud itu sendiri, karena Allah menciptakan alam karena cinta untuk dikenal</span>
+        </label>
+      </div>
+      <div class="q-feedback" id="fb-5"></div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="q-card" id="qc-6">
+      <p class="q-num">Soal 06</p>
+      <p class="q-text">Rabi'ah al-'Adawiyah pernah menolak pinangan Hasan al-Bashri dengan alasan: <em>"Pernikahan hanya untuk yang masih memiliki diri sendiri; aku telah hilang dalam Allah."</em> Peristiwa ini terjadi sekitar tahun...</p>
+      <div class="options" id="opts-6">
+        <label class="opt" onclick="selectOpt(this,6,'A')">
+          <input type="radio" name="q6" value="A">
+          <span class="opt-letter">A</span>
+          <span class="opt-text">± 717 M (periode kelahiran di Basrah)</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,6,'B')">
+          <input type="radio" name="q6" value="B">
+          <span class="opt-letter">B</span>
+          <span class="opt-text">± 730 M (periode perbudakan)</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,6,'C')">
+          <input type="radio" name="q6" value="C">
+          <span class="opt-letter">C</span>
+          <span class="opt-text">± 760 M (periode penolakan pernikahan)</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,6,'D')">
+          <input type="radio" name="q6" value="D">
+          <span class="opt-letter">D</span>
+          <span class="opt-text">± 801 M (periode menjelang wafat)</span>
+        </label>
+      </div>
+      <div class="q-feedback" id="fb-6"></div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="q-card" id="qc-7">
+      <p class="q-num">Soal 07</p>
+      <p class="q-text">Dalam syair <em>al-Ḥubb al-Mushtarak</em>, Rabi'ah membedakan dua jenis cinta: <strong>Ḥubb al-Hawā</strong> dan <strong>Ḥubb al-Istiḥqāq</strong>. Perbedaan mendasar keduanya adalah...</p>
+      <div class="options" id="opts-7">
+        <label class="opt" onclick="selectOpt(this,7,'A')">
+          <input type="radio" name="q7" value="A">
+          <span class="opt-letter">A</span>
+          <span class="opt-text">Hubb al-Hawā dilakukan siang hari, sedangkan Hubb al-Istiḥqāq dilakukan malam hari</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,7,'B')">
+          <input type="radio" name="q7" value="B">
+          <span class="opt-letter">B</span>
+          <span class="opt-text">Hubb al-Hawā bersumber dari kerinduan subjektif si pecinta, sedangkan Hubb al-Istiḥqāq bersumber dari kualitas intrinsik Allah yang memang layak dicintai</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,7,'C')">
+          <input type="radio" name="q7" value="C">
+          <span class="opt-letter">C</span>
+          <span class="opt-text">Hubb al-Hawā diperuntukkan bagi laki-laki, sedangkan Hubb al-Istiḥqāq diperuntukkan bagi perempuan</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,7,'D')">
+          <input type="radio" name="q7" value="D">
+          <span class="opt-letter">D</span>
+          <span class="opt-text">Hubb al-Hawā adalah cinta kepada sesama manusia, sedangkan Hubb al-Istiḥqāq adalah cinta kepada alam</span>
+        </label>
+      </div>
+      <div class="q-feedback" id="fb-7"></div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="q-card" id="qc-8">
+      <p class="q-num">Soal 08</p>
+      <p class="q-text">Max Weber membedakan <em>Gesinnungsethik</em> dan <em>Verantwortungsethik</em>. Konsep mahabbah Rabi'ah paling tepat dikategorikan sebagai...</p>
+      <div class="options" id="opts-8">
+        <label class="opt" onclick="selectOpt(this,8,'A')">
+          <input type="radio" name="q8" value="A">
+          <span class="opt-letter">A</span>
+          <span class="opt-text">Verantwortungsethik — karena Rabi'ah mempertimbangkan konsekuensi ibadahnya di akhirat</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,8,'B')">
+          <input type="radio" name="q8" value="B">
+          <span class="opt-letter">B</span>
+          <span class="opt-text">Gesinnungsethik murni — beribadah berdasarkan keyakinan akan keagungan Allah, tanpa kalkulasi konsekuensi surga/neraka</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,8,'C')">
+          <input type="radio" name="q8" value="C">
+          <span class="opt-letter">C</span>
+          <span class="opt-text">Etika utilitarian — karena ia memilih tindakan yang menghasilkan kebahagiaan terbesar</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,8,'D')">
+          <input type="radio" name="q8" value="D">
+          <span class="opt-letter">D</span>
+          <span class="opt-text">Etika deontologis Kantian — karena ia taat pada hukum moral universal tanpa pengecualian</span>
+        </label>
+      </div>
+      <div class="q-feedback" id="fb-8"></div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="q-card" id="qc-9">
+      <p class="q-num">Soal 09</p>
+      <p class="q-text">Dalam tangga <em>maqamat</em> menuju mahabbah, maqam yang langsung berada <strong>sebelum</strong> mahabbah adalah...</p>
+      <div class="options" id="opts-9">
+        <label class="opt" onclick="selectOpt(this,9,'A')">
+          <input type="radio" name="q9" value="A">
+          <span class="opt-letter">A</span>
+          <span class="opt-text">Zuhd (asketisisme)</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,9,'B')">
+          <input type="radio" name="q9" value="B">
+          <span class="opt-letter">B</span>
+          <span class="opt-text">Taubah (pertobatan)</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,9,'C')">
+          <input type="radio" name="q9" value="C">
+          <span class="opt-letter">C</span>
+          <span class="opt-text">Khawf dan Raja' (rasa takut dan harap)</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,9,'D')">
+          <input type="radio" name="q9" value="D">
+          <span class="opt-letter">D</span>
+          <span class="opt-text">Fanāʾ dan Baqāʾ</span>
+        </label>
+      </div>
+      <div class="q-feedback" id="fb-9"></div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="q-card" id="qc-10">
+      <p class="q-num">Soal 10</p>
+      <p class="q-text">Rabi'ah al-'Adawiyah mendapat julukan <em>sayyidah al-awliyāʾ</em> yang berarti...</p>
+      <div class="options" id="opts-10">
+        <label class="opt" onclick="selectOpt(this,10,'A')">
+          <input type="radio" name="q10" value="A">
+          <span class="opt-letter">A</span>
+          <span class="opt-text">Guru Terbesar (al-Shaikh al-Akbar)</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,10,'B')">
+          <input type="radio" name="q10" value="B">
+          <span class="opt-letter">B</span>
+          <span class="opt-text">Pemimpin para wali</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,10,'C')">
+          <input type="radio" name="q10" value="C">
+          <span class="opt-letter">C</span>
+          <span class="opt-text">Perempuan ahli ibadah dari Basrah</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,10,'D')">
+          <input type="radio" name="q10" value="D">
+          <span class="opt-letter">D</span>
+          <span class="opt-text">Air cinta (Mā al-Maḥabbah)</span>
+        </label>
+      </div>
+      <div class="q-feedback" id="fb-10"></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION III: WAHDATUL WUJUD & IBN 'ARABI                    -->
+  <!-- ============================================================ -->
+  <div class="section-block">
+    <div class="section-head">
+      <div class="sec-num sec-num-gold">III</div>
+      <div class="sec-info">
+        <h2>Wahdatul Wujud &amp; Ibn 'Arabi</h2>
+        <p>Soal 11 – 16 &nbsp;|&nbsp; 6 poin</p>
+      </div>
+    </div>
+
+    <!-- Q11 -->
+    <div class="q-card" id="qc-11">
+      <p class="q-num">Soal 11</p>
+      <p class="q-text">Ibn 'Arabi dikenal dengan gelar <em>al-Shaikh al-Akbar</em>. Karya ensiklopedisnya yang terdiri dari 37 jilid dan ditulis di Mekkah adalah...</p>
+      <div class="options" id="opts-11">
+        <label class="opt" onclick="selectOpt(this,11,'A')">
+          <input type="radio" name="q11" value="A">
+          <span class="opt-letter">A</span>
+          <span class="opt-text">Fuṣūṣ al-Ḥikam</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,11,'B')">
+          <input type="radio" name="q11" value="B">
+          <span class="opt-letter">B</span>
+          <span class="opt-text">Al-Futūḥāt al-Makkiyyah</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,11,'C')">
+          <input type="radio" name="q11" value="C">
+          <span class="opt-letter">C</span>
+          <span class="opt-text">Tarjumān al-Ashwāq</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,11,'D')">
+          <input type="radio" name="q11" value="D">
+          <span class="opt-letter">D</span>
+          <span class="opt-text">Al-Risalah al-Qusyayriyyah</span>
+        </label>
+      </div>
+      <div class="q-feedback" id="fb-11"></div>
+    </div>
+
+    <!-- Q12 -->
+    <div class="q-card" id="qc-12">
+      <p class="q-num">Soal 12</p>
+      <p class="q-text">Perbedaan mendasar antara konsep <strong>Wahdatul Wujud</strong> (Ibn 'Arabi) dan <strong>Panteisme</strong> (Spinoza) adalah...</p>
+      <div class="options" id="opts-12">
+        <label class="opt" onclick="selectOpt(this,12,'A')">
+          <input type="radio" name="q12" value="A">
+          <span class="opt-letter">A</span>
+          <span class="opt-text">Keduanya sama-sama mengidentifikasi Tuhan dengan alam secara total</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,12,'B')">
+          <input type="radio" name="q12" value="B">
+          <span class="opt-letter">B</span>
+          <span class="opt-text">Dalam Wahdatul Wujud, alam adalah tajalli (bayang-bayang) Allah yang bergantung pada-Nya, bukan identitas total; sementara panteisme mengidentifikasi Tuhan dengan alam secara penuh (Deus sive Natura)</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,12,'C')">
+          <input type="radio" name="q12" value="C">
+          <span class="opt-letter">C</span>
+          <span class="opt-text">Panteisme mengakui keesaan Tuhan, sedangkan Wahdatul Wujud mengakui pluralitas wujud</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,12,'D')">
+          <input type="radio" name="q12" value="D">
+          <span class="opt-letter">D</span>
+          <span class="opt-text">Wahdatul Wujud adalah doktrin Kristen, sedangkan panteisme adalah doktrin Islam</span>
+        </label>
+      </div>
+      <div class="q-feedback" id="fb-12"></div>
+    </div>
+
+    <!-- Q13 -->
+    <div class="q-card" id="qc-13">
+      <p class="q-num">Soal 13</p>
+      <p class="q-text">Dalam hierarki <em>al-Ḥaḍarāt al-Khams</em> (Lima Kehadiran), tingkatan tajallī yang paling tinggi dan tidak terjangkau oleh siapapun adalah...</p>
+      <div class="options" id="opts-13">
+        <label class="opt" onclick="selectOpt(this,13,'A')">
+          <input type="radio" name="q13" value="A">
+          <span class="opt-letter">A</span>
+          <span class="opt-text">Tajallī Ḥissī — alam fisik inderawi yang dapat diamati</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,13,'B')">
+          <input type="radio" name="q13" value="B">
+          <span class="opt-letter">B</span>
+          <span class="opt-text">Tajallī Khayālī — alam imajinal antara ruh dan materi</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,13,'C')">
+          <input type="radio" name="q13" value="C">
+          <span class="opt-letter">C</span>
+          <span class="opt-text">Tajallī Dzātī — Wujud Allah dalam Diri-Nya, al-Ghayb al-Mutlaq</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,13,'D')">
+          <input type="radio" name="q13" value="D">
+          <span class="opt-letter">D</span>
+          <span class="opt-text">Tajallī Fi'lī — manifestasi dalam perbuatan penciptaan alam</span>
+        </label>
+      </div>
+      <div class="q-feedback" id="fb-13"></div>
+    </div>
+
+    <!-- Q14 -->
+    <div class="q-card" id="qc-14">
+      <p class="q-num">Soal 14</p>
+      <p class="q-text">Ibn Taimiyah mengkritik doktrin Wahdatul Wujud dalam karyanya <em>Majmū' al-Fatāwā</em>. Inti kritiknya adalah...</p>
+      <div class="options" id="opts-14">
+        <label class="opt" onclick="selectOpt(this,14,'A')">
+          <input type="radio" name="q14" value="A">
+          <span class="opt-letter">A</span>
+          <span class="opt-text">Wahdatul Wujud tidak memiliki landasan dalam ilmu fisika kuantum</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,14,'B')">
+          <input type="radio" name="q14" value="B">
+          <span class="opt-letter">B</span>
+          <span class="opt-text">Wahdatul Wujud menafikan perbedaan esensial antara Khaliq dan makhluk, dan berkata bahwa wujud makhluk adalah wujud Al-Haqq adalah kufur</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,14,'C')">
+          <input type="radio" name="q14" value="C">
+          <span class="opt-letter">C</span>
+          <span class="opt-text">Ibn 'Arabi tidak memiliki sanad keilmuan yang jelas kepada Rasulullah SAW</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,14,'D')">
+          <input type="radio" name="q14" value="D">
+          <span class="opt-letter">D</span>
+          <span class="opt-text">Wahdatul Wujud hanya berlaku untuk masyarakat Al-Andalus dan tidak universal</span>
+        </label>
+      </div>
+      <div class="q-feedback" id="fb-14"></div>
+    </div>
+
+    <!-- Q15 -->
+    <div class="q-card" id="qc-15">
+      <p class="q-num">Soal 15</p>
+      <p class="q-text">Muhammad Iqbal dalam <em>Reconstruction of Religious Thought in Islam</em> (1930) mengkritik sufisme monistik karena...</p>
+      <div class="options" id="opts-15">
+        <label class="opt" onclick="selectOpt(this,15,'A')">
+          <input type="radio" name="q15" value="A">
+          <span class="opt-letter">A</span>
+          <span class="opt-text">Bertentangan dengan ajaran fikih Imam Syafi'i secara langsung</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,15,'B')">
+          <input type="radio" name="q15" value="B">
+          <span class="opt-letter">B</span>
+          <span class="opt-text">Menciptakan manusia yang pasif dan melarikan diri dari dunia, bukan manusia aktif sebagai khalifah Allah</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,15,'C')">
+          <input type="radio" name="q15" value="C">
+          <span class="opt-letter">C</span>
+          <span class="opt-text">Terlalu banyak menggunakan bahasa Persia dan puisi, bukan bahasa Arab ilmiah</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,15,'D')">
+          <input type="radio" name="q15" value="D">
+          <span class="opt-letter">D</span>
+          <span class="opt-text">Menjadi alat penjajahan Barat terhadap dunia Islam di abad ke-19</span>
+        </label>
+      </div>
+      <div class="q-feedback" id="fb-15"></div>
+    </div>
+
+    <!-- Q16 -->
+    <div class="q-card" id="qc-16">
+      <p class="q-num">Soal 16</p>
+      <p class="q-text">Apresiasi terhadap Wahdatul Wujud dari perspektif etika lingkungan adalah...</p>
+      <div class="options" id="opts-16">
+        <label class="opt" onclick="selectOpt(this,16,'A')">
+          <input type="radio" name="q16" value="A">
+          <span class="opt-letter">A</span>
+          <span class="opt-text">Jika alam adalah tajalli Allah, merusak alam berarti mengotori manifestasi Ilahi — menghasilkan etika lingkungan yang kuat</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,16,'B')">
+          <input type="radio" name="q16" value="B">
+          <span class="opt-letter">B</span>
+          <span class="opt-text">Wahdatul Wujud mengizinkan eksploitasi alam karena alam adalah satu dengan Tuhan yang tak terbatas</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,16,'C')">
+          <input type="radio" name="q16" value="C">
+          <span class="opt-letter">C</span>
+          <span class="opt-text">Etika lingkungan hanya bisa dibangun melalui sains, bukan melalui tasawuf</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,16,'D')">
+          <input type="radio" name="q16" value="D">
+          <span class="opt-letter">D</span>
+          <span class="opt-text">Alam tidak memiliki nilai intrinsik dalam pandangan Ibn 'Arabi karena bersifat fana</span>
+        </label>
+      </div>
+      <div class="q-feedback" id="fb-16"></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION IV: TASAWUF FALSAFI                                   -->
+  <!-- ============================================================ -->
+  <div class="section-block">
+    <div class="section-head">
+      <div class="sec-num sec-num-muted">IV</div>
+      <div class="sec-info">
+        <h2>Tasawuf Falsafi</h2>
+        <p>Soal 17 – 18 &nbsp;|&nbsp; 2 poin</p>
+      </div>
+    </div>
+
+    <!-- Q17 -->
+    <div class="q-card" id="qc-17">
+      <p class="q-num">Soal 17</p>
+      <p class="q-text">Perbedaan utama antara <strong>tasawuf falsafi</strong> dan <strong>tasawuf akhlaki</strong> (Al-Ghazali) adalah...</p>
+      <div class="options" id="opts-17">
+        <label class="opt" onclick="selectOpt(this,17,'A')">
+          <input type="radio" name="q17" value="A">
+          <span class="opt-letter">A</span>
+          <span class="opt-text">Tasawuf falsafi hanya diizinkan untuk laki-laki, sedangkan tasawuf akhlaki terbuka untuk perempuan</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,17,'B')">
+          <input type="radio" name="q17" value="B">
+          <span class="opt-letter">B</span>
+          <span class="opt-text">Tasawuf falsafi mengintegrasikan pengalaman mistik dengan analisis filosofis sistematis; tasawuf akhlaki berfokus pada tazkiyat al-nafs yang berorientasi etis-praktis</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,17,'C')">
+          <input type="radio" name="q17" value="C">
+          <span class="opt-letter">C</span>
+          <span class="opt-text">Tasawuf akhlaki berasal dari Persia, sedangkan tasawuf falsafi berasal dari Al-Andalus</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,17,'D')">
+          <input type="radio" name="q17" value="D">
+          <span class="opt-letter">D</span>
+          <span class="opt-text">Keduanya identik karena sama-sama bertujuan mendekatkan diri kepada Allah melalui ibadah ritual</span>
+        </label>
+      </div>
+      <div class="q-feedback" id="fb-17"></div>
+    </div>
+
+    <!-- Q18 -->
+    <div class="q-card" id="qc-18">
+      <p class="q-num">Soal 18</p>
+      <p class="q-text">Kritik epistemologis al-Junayd al-Baghdadi terhadap tasawuf falsafi menegaskan bahwa...</p>
+      <div class="options" id="opts-18">
+        <label class="opt" onclick="selectOpt(this,18,'A')">
+          <input type="radio" name="q18" value="A">
+          <span class="opt-letter">A</span>
+          <span class="opt-text">Ilmu tasawuf harus dibatasi oleh Al-Quran dan Sunnah; kashf (penyingkapan) tidak dapat diverifikasi secara intersubjektif</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,18,'B')">
+          <input type="radio" name="q18" value="B">
+          <span class="opt-letter">B</span>
+          <span class="opt-text">Tasawuf falsafi lebih unggul dari syariat karena mampu menjangkau realitas yang lebih tinggi</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,18,'C')">
+          <input type="radio" name="q18" value="C">
+          <span class="opt-letter">C</span>
+          <span class="opt-text">Wahdatul Wujud adalah puncak tertinggi ilmu Islam yang harus diajarkan kepada semua muslim</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,18,'D')">
+          <input type="radio" name="q18" value="D">
+          <span class="opt-letter">D</span>
+          <span class="opt-text">Filsafat Yunani harus sepenuhnya diintegrasikan ke dalam metodologi tasawuf</span>
+        </label>
+      </div>
+      <div class="q-feedback" id="fb-18"></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION V: PEREMPUAN & TASAWUF                               -->
+  <!-- ============================================================ -->
+  <div class="section-block">
+    <div class="section-head">
+      <div class="sec-num sec-num-em">V</div>
+      <div class="sec-info">
+        <h2>Perempuan &amp; Tasawuf</h2>
+        <p>Soal 19 – 20 &nbsp;|&nbsp; 2 poin</p>
+      </div>
+    </div>
+
+    <!-- Q19 -->
+    <div class="q-card" id="qc-19">
+      <p class="q-num">Soal 19</p>
+      <p class="q-text">Menurut Pierre Bourdieu (<em>Le sens pratique</em>, 1980), alasan mengapa tasawuf menjadi ruang yang relatif terbuka bagi perempuan adalah...</p>
+      <div class="options" id="opts-19">
+        <label class="opt" onclick="selectOpt(this,19,'A')">
+          <input type="radio" name="q19" value="A">
+          <span class="opt-letter">A</span>
+          <span class="opt-text">Tasawuf menyediakan arena (champ) alternatif di mana modal yang diakumulasikan adalah modal spiritual — yang tidak bergantung pada jenis kelamin</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,19,'B')">
+          <input type="radio" name="q19" value="B">
+          <span class="opt-letter">B</span>
+          <span class="opt-text">Para sufi laki-laki secara sadar memilih untuk memberikan kesetaraan gender demi misi dakwah</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,19,'C')">
+          <input type="radio" name="q19" value="C">
+          <span class="opt-letter">C</span>
+          <span class="opt-text">Perempuan secara biologis memiliki kapasitas spiritual yang lebih tinggi dari laki-laki</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,19,'D')">
+          <input type="radio" name="q19" value="D">
+          <span class="opt-letter">D</span>
+          <span class="opt-text">Tasawuf secara eksplisit mengharuskan kehadiran perempuan dalam setiap majelis zikir</span>
+        </label>
+      </div>
+      <div class="q-feedback" id="fb-19"></div>
+    </div>
+
+    <!-- Q20 -->
+    <div class="q-card" id="qc-20">
+      <p class="q-num">Soal 20</p>
+      <p class="q-text">Sufi perempuan yang dikenal sebagai guru spiritual dari tokoh besar Dzul-Nun al-Mishri adalah...</p>
+      <div class="options" id="opts-20">
+        <label class="opt" onclick="selectOpt(this,20,'A')">
+          <input type="radio" name="q20" value="A">
+          <span class="opt-letter">A</span>
+          <span class="opt-text">Rabi'ah al-'Adawiyah</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,20,'B')">
+          <input type="radio" name="q20" value="B">
+          <span class="opt-letter">B</span>
+          <span class="opt-text">Fāṭimah al-Nīshāpūrī</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,20,'C')">
+          <input type="radio" name="q20" value="C">
+          <span class="opt-letter">C</span>
+          <span class="opt-text">'Āʾishah al-Bāʿūniyyah</span>
+        </label>
+        <label class="opt" onclick="selectOpt(this,20,'D')">
+          <input type="radio" name="q20" value="D">
+          <span class="opt-letter">D</span>
+          <span class="opt-text">Lubābah al-Muta'abbidah</span>
+        </label>
+      </div>
+      <div class="q-feedback" id="fb-20"></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION ESSAY                                                 -->
+  <!-- ============================================================ -->
+  <div class="section-block">
+    <div class="section-head">
+      <div class="sec-num sec-num-sky">E</div>
+      <div class="sec-info">
+        <h2>Soal Uraian / Essay</h2>
+        <p>3 soal &nbsp;|&nbsp; Nilai dinilai oleh dosen</p>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-num">Soal Essay A</p>
+      <p class="q-text">Jelaskan secara konseptual perbedaan antara <strong>Wahdatul Wujud</strong> (Ibn 'Arabi) dan <strong>panteisme</strong> (Spinoza). Gunakan analogi yang relevan dan tunjukkan bahwa perbedaan keduanya bukan sekadar terminologis, tetapi ontologis.</p>
+      <span class="essay-label">Jawaban Anda:</span>
+      <textarea id="essay_a" name="essay_a" placeholder="Tuliskan uraian Anda di sini. Sertakan referensi konsep yang telah dipelajari..." rows="6"></textarea>
+      <p class="essay-note">💡 Panduan: Gunakan konsep al-tajalli, al-wujud, dan perbedaan antara Khaliq-makhluk sebagai kerangka jawaban.</p>
+    </div>
+
+    <div class="q-card">
+      <p class="q-num">Soal Essay B</p>
+      <p class="q-text">Hubungkan konsep <strong>mahabbah</strong> Rabi'ah al-'Adawiyah dengan kerangka sosiologi Max Weber (<em>Gesinnungsethik</em>) dan Émile Durkheim (<em>desekularisasi total</em>). Bagaimana konsep cinta murni Rabi'ah dapat dibaca sebagai fenomena sosiologis, bukan sekadar pengalaman mistis individual?</p>
+      <span class="essay-label">Jawaban Anda:</span>
+      <textarea id="essay_b" name="essay_b" placeholder="Tuliskan analisis sosiologis Anda, dengan mengaitkan perspektif Weber dan Durkheim..." rows="6"></textarea>
+      <p class="essay-note">💡 Panduan: Ingat perbedaan <em>aus Pflicht</em> vs <em>aus Neigung</em> (Kant) dan konsep <em>sakral-profan</em> Durkheim.</p>
+    </div>
+
+    <div class="q-card">
+      <p class="q-num">Soal Essay C</p>
+      <p class="q-text">Analisis mengapa tasawuf secara historis menjadi <strong>ruang emansipasi</strong> bagi perempuan. Gunakan minimal dua perspektif teoritis dari materi (Bourdieu, Butler, Foucault, atau Ahmed) dan hubungkan dengan bukti historis tokoh sufi perempuan yang telah dipelajari.</p>
+      <span class="essay-label">Jawaban Anda:</span>
+      <textarea id="essay_c" name="essay_c" placeholder="Uraikan analisis Anda dengan menggunakan teori dan bukti historis..." rows="6"></textarea>
+      <p class="essay-note">💡 Panduan: Perhatikan konsep <em>modal spiritual</em> (Bourdieu), <em>performativitas gender</em> (Butler), dan <em>technologies of self</em> (Foucault).</p>
+    </div>
+  </div>
+
+  <!-- ===== SUBMIT AREA ===== -->
+  <div class="submit-area">
+    <h3>Kirim Jawaban</h3>
+    <p>Pastikan seluruh soal pilihan ganda telah dijawab dan soal essay telah diisi. Setelah menekan tombol di bawah, skor dihitung otomatis <strong>dan hasil dikirim ke email dosen</strong>.</p>
+    <div class="btn-row">
+      <button class="btn btn-primary" id="btn-submit" onclick="submitQuiz()">✦ Periksa &amp; Kirim Hasil</button>
+      <button class="btn btn-secondary" onclick="window.print()">⊡ Cetak / Simpan PDF</button>
+    </div>
+    <!-- Status pengiriman -->
+    <div id="send-status" style="display:none;margin-top:1rem;padding:.75rem 1rem;border-radius:8px;font-size:.83rem;line-height:1.6"></div>
+  </div>
+
+  <!-- ===== SCORE PANEL ===== -->
+  <div id="score-panel">
+    <div class="score-ornament">✦</div>
+    <div class="score-grade" id="score-pct">—</div>
+    <div class="score-label">Skor Pilihan Ganda</div>
+    <div class="score-detail">
+      <div class="score-box">
+        <div class="val" id="sc-correct">0</div>
+        <div class="lbl">Benar</div>
+      </div>
+      <div class="score-box">
+        <div class="val" id="sc-wrong">0</div>
+        <div class="lbl">Salah</div>
+      </div>
+      <div class="score-box">
+        <div class="val" id="sc-total">0</div>
+        <div class="lbl">Total PG</div>
+      </div>
+    </div>
+    <p class="score-msg" id="score-msg"></p>
+    <div class="score-note">
+      ✦ Skor ini hanya mencakup soal pilihan ganda (20 soal). Soal essay (A–C) dinilai terpisah oleh dosen.<br>
+      Nilai akhir = (Skor PG × bobot) + (Skor Essay × bobot) sesuai rubrik penilaian dosen.<br><br>
+      <strong>Nama:</strong> <span id="res-nama">—</span> &nbsp;|&nbsp;
+      <strong>NIM:</strong> <span id="res-nim">—</span> &nbsp;|&nbsp;
+      <strong>Kelas:</strong> <span id="res-kelas">—</span>
+    </div>
+  </div>
+
+</div><!-- end wrapper -->
+
+<script>
+// ============================================================
+// KONFIGURASI — GANTI ACCESS KEY DI BAWAH INI
+// Cara mendapatkan: buka web3forms.com → masukkan email
+// irsyad.msk@gmail.com → cek inbox → copy access key
+// ============================================================
+const WEB3FORMS_KEY = 'GANTI_DENGAN_ACCESS_KEY_ANDA';
+
+// ============================================================
+// DATA: Kunci Jawaban
+// ============================================================
+const KUNCI = {
+  1: 'B', 2: 'B', 3: 'C', 4: 'A',
+  5: 'B', 6: 'C', 7: 'B', 8: 'B', 9: 'C', 10: 'B',
+  11: 'B', 12: 'B', 13: 'C', 14: 'B', 15: 'B', 16: 'A',
+  17: 'B', 18: 'A',
+  19: 'A', 20: 'B'
+};
+
+const FEEDBACK = {
+  1: {correct:'Tepat. <em>Lughah al-mahabbah</em> adalah sistem semiotik tersendiri dalam tasawuf — bahasa simbolis yang berbeda dari bahasa diskursif biasa. Membacanya secara harfiah adalah kesalahan metodologis fundamental.',
+      wrong:'Kurang tepat. <em>Lughah al-mahabbah</em> bukan merujuk pada dialek atau bahasa tertentu, melainkan sistem semiotik tersendiri dalam tradisi tasawuf yang memuat makna batin di balik kata-kata zahir.'},
+  2: {correct:'Tepat. Urutan lapisan makna dari luar ke dalam: <strong>Zahir</strong> (literal) → <strong>Batin</strong> (simbolis-mistik) → <strong>Isyari</strong> (intuitif-transendental, hanya dapat dirasakan).',
+      wrong:'Kurang tepat. Urutan yang benar adalah Zahir → Batin → Isyari. Zahir adalah lapisan paling luar yang terlihat, Isyari adalah lapisan paling dalam yang hanya dapat "dirasakan."'},
+  3: {correct:'Tepat. Syair Rabi'ah tidak menolak doktrin surga-neraka, melainkan menggunakannya sebagai <strong>metafora relasional</strong> untuk menggambarkan kualitas cinta — bebas dari motivasi transaksional.',
+      wrong:'Kurang tepat. Rabi'ah tidak menolak doktrin surga-neraka. Syairnya adalah metafora yang menggambarkan cinta murni, bukan kritik terhadap teologi akhirat.'},
+  4: {correct:'Tepat. QS. Al-Hadid [57]: 3 yang menyebut Allah sebagai <em>al-Bāṭin</em> memberi landasan Quranic bagi tafsir isyari — dimensi batin realitas diakui oleh Al-Quran sendiri.',
+      wrong:'Kurang tepat. Ayat ini justru menegaskan adanya dimensi batin (al-Bāṭin) dari realitas yang diakui Al-Quran, membuka pintu sah bagi tafsir isyari dengan syarat-syarat tertentu.'},
+  5: {correct:'Tepat. Al-Ghazali dalam <em>Ihya' 'Ulum al-Din</em> mendefinisikan mahabbah sebagai <em>kecenderungan jiwa</em> kepada sesuatu yang menyenangkan — bila sempurna disebut mahabbah, bila melampaui batas disebut \'isyq.',
+      wrong:'Kurang tepat. Definisi tersebut adalah milik Ibn \'Arabi (mahabbah sebagai asal wujud) atau Rabi'ah, bukan Al-Ghazali. Al-Ghazali mendefinisikan mahabbah sebagai kecenderungan (mayl) jiwa.'},
+  6: {correct:'Tepat. Penolakan pinangan Hasan al-Bashri terjadi sekitar ± 760 M, yang merupakan periode penolakan pernikahan dalam kronologi kehidupan Rabi'ah.',
+      wrong:'Kurang tepat. Peristiwa penolakan pinangan terjadi sekitar ± 760 M (periode uzlah dan pematangan spiritual), bukan pada periode kelahiran, perbudakan, atau menjelang wafat.'},
+  7: {correct:'Tepat. <strong>Ḥubb al-Hawā</strong> berpusat pada si pecinta (kerinduan subjektif), sedangkan <strong>Ḥubb al-Istiḥqāq</strong> berpusat pada Yang Dicintai (kualitas intrinsik Allah yang layak dicintai).',
+      wrong:'Kurang tepat. Pembedaan dua cinta Rabi'ah bukan berdasarkan waktu, gender, atau objek duniawi, melainkan berdasarkan sumbernya: subjektivitas pecinta vs kualitas intrinsik Allah.'},
+  8: {correct:'Tepat. Mahabbah Rabi'ah adalah bentuk murni <strong>Gesinnungsethik</strong> Weber: beribadah dari keyakinan akan keagungan Allah tanpa kalkulasi konsekuensi. Ia menolak "surga" dan "neraka" sebagai motivasi — murni <em>aus Pflicht</em> (dari pengakuan layak-dicintai-Nya).',
+      wrong:'Kurang tepat. Rabi'ah justru menolak kalkulasi surga-neraka, sehingga konsepnya berlawanan dengan Verantwortungsethik. Mahabbahnya adalah Gesinnungsethik murni.'},
+  9: {correct:'Tepat. Dalam tangga maqamat, urutan: Taubah → Zuhd → Sabr → Shukr → <strong>Khawf & Raja'</strong> → Mahabbah → Fanāʾ & Baqāʾ. Maqam tepat sebelum mahabbah adalah Khawf dan Raja'.',
+      wrong:'Kurang tepat. Urutan maqamat: Taubah → Zuhd → Sabr → Shukr → Khawf & Raja' → Mahabbah. Maqam sebelum mahabbah adalah Khawf (rasa takut kepada Allah) dan Raja' (harapan).'},
+  10: {correct:'Tepat. <em>Sayyidah al-awliyāʾ</em> berarti <strong>pemimpin para wali</strong>. Ini berbeda dari gelar <em>al-Shaikh al-Akbar</em> yang adalah gelar Ibn \'Arabi.',
+      wrong:'Kurang tepat. <em>Sayyidah al-awliyāʾ</em> berarti "pemimpin para wali". <em>Al-Shaikh al-Akbar</em> (Guru Terbesar) adalah gelar Ibn \'Arabi, bukan Rabi'ah.'},
+  11: {correct:'Tepat. <em>Al-Futūḥāt al-Makkiyyah</em> (Pembukaan-Pembukaan Makkah) adalah ensiklopedia mistisisme Islam terbesar karya Ibn \'Arabi, terdiri dari 37 jilid, ditulis di Mekkah.',
+      wrong:'Kurang tepat. <em>Fuṣūṣ al-Ḥikam</em> hanya terdiri dari 27 fasal (jauh lebih pendek); <em>Tarjumān al-Ashwāq</em> adalah puisi mistis. Yang 37 jilid adalah <em>Al-Futūḥāt al-Makkiyyah</em>.'},
+  12: {correct:'Tepat. Perbedaan mendasar: panteisme mengidentifikasi Tuhan dengan alam secara total (<em>Deus sive Natura</em> — Spinoza). Wahdatul Wujud menegaskan bahwa alam adalah <em>tajalli/zill</em> (bayang-bayang/manifestasi) — bergantung pada wujud Allah, tetapi bukan identik dengan-Nya.',
+      wrong:'Kurang tepat. Keduanya berbeda secara ontologis: panteisme = identitas total Tuhan-alam; Wahdatul Wujud = alam sebagai manifestasi (bukan identitas) yang bergantung sepenuhnya pada wujud Allah.'},
+  13: {correct:'Tepat. <strong>Tajallī Dzātī</strong> adalah tingkatan tertinggi — Wujud Allah dalam Diri-Nya (<em>al-Ghayb al-Mutlaq</em>, Yang Gaib Mutlak) — tidak terjangkau oleh siapapun dan apapun.',
+      wrong:'Kurang tepat. Hierarki dari atas ke bawah: Tajallī Dzātī → Sifātī → Fi\'lī → Khayālī → Ḥissī. Yang tertinggi dan tak terjangkau adalah Tajallī Dzātī.'},
+  14: {correct:'Tepat. Kritik Ibn Taimiyah dalam <em>Majmū\' al-Fatāwā</em>: siapa yang berkata wujud makhluk adalah wujud Al-Haqq telah kafir, karena menafikan perbedaan esensial antara Khaliq dan makhluk-Nya.',
+      wrong:'Kurang tepat. Kritik Ibn Taimiyah bersifat teologis-akidah: ia menolak doktrin yang menafikan perbedaan esensial antara Khaliq dan makhluk, bukan kritik dari perspektif sains atau metodologi sanad.'},
+  15: {correct:'Tepat. Iqbal dalam <em>Reconstruction of Religious Thought in Islam</em> (1930) mengkritik sufisme monistik karena melahirkan manusia yang pasif — yang melarikan diri dari dunia — bukan manusia aktif sebagai khalifah Allah di bumi.',
+      wrong:'Kurang tepat. Kritik Iqbal bersifat sosiologis-filosofis: sufisme monistik menciptakan manusia pasif yang fatalistik, bukan manusia dinamis yang membangun peradaban sebagai khalifah.'},
+  16: {correct:'Tepat. Jika seluruh alam adalah tajalli Allah (manifestasi Ilahi), maka merusak alam setara dengan mengotori manifestasi Ilahi — ini menghasilkan landasan etika lingkungan yang kuat, jauh mendahului gerakan ekologi modern.',
+      wrong:'Kurang tepat. Justru sebaliknya: karena alam adalah tajalli Allah, ia memiliki nilai sakral intrinsik. Mengeksploitasinya adalah pelanggaran spiritual, bukan izin.'},
+  17: {correct:'Tepat. Tasawuf falsafi = integrasi <em>dzauq</em> (pengalaman mistik) dengan <em>nazar</em> (analisis filosofis sistematis). Tasawuf akhlaki (Al-Ghazali) = fokus pada <em>tazkiyat al-nafs</em>, berorientasi etis-praktis.',
+      wrong:'Kurang tepat. Perbedaan keduanya bukan soal gender atau geografi, melainkan soal metode: falsafi mengintegrasikan filsafat dalam kajian mistik; akhlaki berfokus pada penyucian jiwa secara etis-praktis.'},
+  18: {correct:'Tepat. Al-Junayd menegaskan: "Ilmu kita dibatasi oleh Al-Quran dan Sunnah." Kritiknya epistemologis: kashf tidak dapat diverifikasi secara intersubjektif — ini batas metodologis yang penting.',
+      wrong:'Kurang tepat. Al-Junayd bukan mendukung superioritas tasawuf atas syariat atau mengintegrasikan filsafat Yunani. Ia justru membatasi tasawuf pada kerangka Al-Quran dan Sunnah.'},
+  19: {correct:'Tepat. Bourdieu: dalam hierarki sosial patriarkal, perempuan kekurangan modal ekonomi/sosial/kultural. Tasawuf menyediakan <em>champ</em> (arena) alternatif di mana modal yang berlaku adalah <strong>modal spiritual</strong> — tidak tergantung jenis kelamin.',
+      wrong:'Kurang tepat. Analisis Bourdieu bersifat struktural: bukan soal kesadaran individual para sufi laki-laki, melainkan soal struktur arena (champ) tasawuf yang mensyaratkan modal spiritual, bukan modal gender.'},
+  20: {correct:'Tepat. <strong>Fāṭimah al-Nīshāpūrī</strong> adalah guru spiritual Dzul-Nun al-Mishri, yang berkata: "Aku belum pernah melihat seorang pun yang lebih ma\'rifat kepada Allah daripada Fatimah al-Nishapuri."',
+      wrong:'Kurang tepat. Rabi'ah al-\'Adawiyah adalah arsitek mahabbah ilahiyah; \'Āʾishah al-Bāʿūniyyah adalah penulis sufi terprolific abad 15-16; Lubābah menjadi rujukan di Masjidil Haram. Yang menjadi guru Dzul-Nun adalah Fāṭimah al-Nīshāpūrī.'}
+};
+
+// ============================================================
+// STATE
+// ============================================================
+let selected = {}; // {qNum: 'A'/'B'/'C'/'D'}
+let submitted = false;
+
+// ============================================================
+// SELECT OPTION
+// ============================================================
+function selectOpt(el, qNum, letter) {
+  if (submitted) return;
+  selected[qNum] = letter;
+  const opts = document.querySelectorAll(`#opts-${qNum} .opt`);
+  opts.forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  updateProgress();
+}
+
+// ============================================================
+// PROGRESS
+// ============================================================
+function updateProgress() {
+  const answered = Object.keys(selected).length;
+  document.getElementById('answered-counter').textContent = answered;
+  const pct = (answered / 20) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+// ============================================================
+// LABEL SOAL (untuk isi email)
+// ============================================================
+const LABEL_SOAL = {
+  1:'Definisi lughah al-mahabbah',
+  2:'Urutan lapisan makna teks sufi',
+  3:'Tafsir syair Rabi\'ah tentang surga-neraka',
+  4:'Fungsi QS. Al-Hadid [57]:3 dalam epistemologi tasawuf',
+  5:'Definisi mahabbah menurut Al-Ghazali',
+  6:'Kronologi penolakan pinangan Rabi\'ah',
+  7:'Perbedaan Hubb al-Hawa dan Hubb al-Istihqaq',
+  8:'Mahabbah Rabi\'ah dalam kerangka Weber',
+  9:'Maqam sebelum mahabbah dalam tangga maqamat',
+  10:'Arti gelar Sayyidah al-Awliya\'',
+  11:'Karya ensiklopedis 37 jilid Ibn \'Arabi',
+  12:'Perbedaan Wahdatul Wujud dan panteisme',
+  13:'Tingkatan tajalli tertinggi (al-Hadarat al-Khams)',
+  14:'Inti kritik Ibn Taimiyah terhadap Wahdatul Wujud',
+  15:'Kritik Muhammad Iqbal terhadap sufisme monistik',
+  16:'Apresiasi Wahdatul Wujud untuk etika lingkungan',
+  17:'Perbedaan tasawuf falsafi dan tasawuf akhlaki',
+  18:'Kritik epistemologis Al-Junayd al-Baghdadi',
+  19:'Analisis Bourdieu tentang perempuan dan tasawuf',
+  20:'Guru spiritual Dzul-Nun al-Mishri'
+};
+
+// ============================================================
+// SUBMIT
+// ============================================================
+async function submitQuiz() {
+  if (submitted) return;
+
+  // Validasi identitas
+  const nama  = document.getElementById('nama').value.trim();
+  const nim   = document.getElementById('nim').value.trim();
+  const kelas = document.getElementById('kelas').value.trim();
+  const tgl   = document.getElementById('tanggal').value;
+
+  if (!nama) {
+    alert('Mohon isi nama lengkap terlebih dahulu.');
+    document.getElementById('nama').focus();
+    return;
+  }
+
+  // Peringatan soal yang belum dijawab
+  const unanswered = [];
+  for (let i = 1; i <= 20; i++) {
+    if (!selected[i]) unanswered.push(i);
+  }
+  if (unanswered.length > 0) {
+    const ok = confirm(`Soal nomor ${unanswered.join(', ')} belum dijawab. Lanjutkan submit?`);
+    if (!ok) return;
+  }
+
+  submitted = true;
+  document.getElementById('btn-submit').disabled = true;
+  document.getElementById('btn-submit').textContent = '⏳ Memproses...';
+
+  // ---- Hitung skor ----
+  let correct = 0, wrong = 0;
+  const detailJawaban = [];
+
+  for (let i = 1; i <= 20; i++) {
+    const qc   = document.getElementById(`qc-${i}`);
+    const fb   = document.getElementById(`fb-${i}`);
+    const opts = document.querySelectorAll(`#opts-${i} .opt`);
+    const ans  = selected[i] || '—';
+    const key  = KUNCI[i];
+    const benar = ans === key;
+
+    opts.forEach(o => { o.classList.add('disabled'); o.onclick = null; });
+    opts.forEach(o => {
+      const ltr = o.querySelector('.opt-letter').textContent;
+      if (ltr === key) o.classList.add('correct-ans');
+      if (ans && ltr === ans && !benar) o.classList.add('wrong-ans');
+    });
+
+    if (benar) {
+      correct++;
+      qc.classList.add('answered-correct');
+      fb.className = 'q-feedback fb-correct show';
+      fb.innerHTML = '✓ Benar! ' + FEEDBACK[i].correct;
+    } else {
+      wrong++;
+      qc.classList.add('answered-wrong');
+      fb.className = 'q-feedback fb-wrong show';
+      fb.innerHTML = '✗ Kurang Tepat. ' + FEEDBACK[i].wrong;
+    }
+
+    detailJawaban.push(
+      `[${benar ? '✓' : '✗'}] No.${String(i).padStart(2,'0')} — ${LABEL_SOAL[i]}\n    Jawaban: ${ans} | Kunci: ${key}`
+    );
+  }
+
+  const pct = Math.round((correct / 20) * 100);
+
+  // ---- Tampilkan skor di halaman ----
+  document.getElementById('sc-correct').textContent = correct;
+  document.getElementById('sc-wrong').textContent   = wrong;
+  document.getElementById('sc-total').textContent   = 20;
+  document.getElementById('score-pct').textContent  = pct + '%';
+  document.getElementById('res-nama').textContent   = nama;
+  document.getElementById('res-nim').textContent    = nim || '—';
+  document.getElementById('res-kelas').textContent  = kelas || '—';
+
+  const msgs = [
+    [90,'✦ Istimewa. Pemahaman terhadap dimensi esoterik tasawuf sangat mendalam.'],
+    [75,'◈ Sangat Baik. Konsep-konsep utama dikuasai dengan solid.'],
+    [60,'◇ Cukup Baik. Beberapa konsep inti perlu didalami kembali.'],
+    [0, '△ Perlu Ditingkatkan. Review kembali materi dari awal.']
+  ];
+  for (const [thr, msg] of msgs) {
+    if (pct >= thr) { document.getElementById('score-msg').innerHTML = msg; break; }
+  }
+
+  const panel = document.getElementById('score-panel');
+  panel.classList.add('show');
+  panel.scrollIntoView({behavior:'smooth', block:'center'});
+  document.getElementById('progressFill').style.width = '100%';
+
+  // ---- Ambil jawaban essay ----
+  const essayA = document.getElementById('essay_a').value.trim() || '(tidak diisi)';
+  const essayB = document.getElementById('essay_b').value.trim() || '(tidak diisi)';
+  const essayC = document.getElementById('essay_c').value.trim() || '(tidak diisi)';
+
+  // ---- Susun isi email ----
+  const predikat = pct>=90?'Istimewa':pct>=75?'Sangat Baik':pct>=60?'Cukup Baik':'Perlu Ditingkatkan';
+  const emailBody = `
+HASIL KUIS AKHLAK TASAWUF — MAHABBAH, FANĀ', DAN WUJŪD
+Prodi Komunikasi Penyiaran Islam | STAI Dr. KH. EZ. Muttaqien Purwakarta
+═══════════════════════════════════════════════════════
+
+IDENTITAS MAHASISWA
+  Nama   : ${nama}
+  NIM    : ${nim || '—'}
+  Kelas  : ${kelas || '—'}
+  Tanggal: ${tgl || new Date().toLocaleDateString('id-ID')}
+
+SKOR PILIHAN GANDA
+  Benar  : ${correct} / 20
+  Salah  : ${wrong} / 20
+  Nilai  : ${pct}% — ${predikat}
+
+═══════════════════════════════════════════════════════
+DETAIL JAWABAN PILIHAN GANDA
+${detailJawaban.join('\n')}
+
+═══════════════════════════════════════════════════════
+JAWABAN ESSAY
+
+[Essay A] Wahdatul Wujud vs Panteisme:
+${essayA}
+
+[Essay B] Mahabbah Rabi'ah dalam Perspektif Sosiologis:
+${essayB}
+
+[Essay C] Tasawuf sebagai Ruang Emansipasi Perempuan:
+${essayC}
+`.trim();
+
+  // ---- Kirim ke Web3Forms ----
+  const statusEl = document.getElementById('send-status');
+  statusEl.style.display = 'block';
+  statusEl.style.background = 'rgba(42,95,138,0.1)';
+  statusEl.style.border = '1px solid rgba(91,158,201,0.25)';
+  statusEl.style.color = 'var(--sky-l)';
+  statusEl.innerHTML = '⏳ Mengirim hasil ke dosen...';
+
+  try {
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+      body: JSON.stringify({
+        access_key: WEB3FORMS_KEY,
+        subject: `[Kuis Akhlak Tasawuf] ${nama} — ${pct}% (${correct}/20)`,
+        from_name: nama,
+        message: emailBody,
+        botcheck: ''
+      })
+    });
+    const data = await res.json();
+
+    if (data.success) {
+      statusEl.style.background = 'rgba(31,107,74,0.1)';
+      statusEl.style.border = '1px solid rgba(61,175,126,0.35)';
+      statusEl.style.color = 'var(--em-l)';
+      statusEl.innerHTML = '✓ Hasil berhasil dikirim ke email dosen. Anda juga bisa mencetak halaman ini sebagai bukti pengerjaan.';
+      document.getElementById('btn-submit').textContent = '✓ Terkirim';
+    } else {
+      throw new Error(data.message || 'Gagal');
+    }
+  } catch(err) {
+    statusEl.style.background = 'rgba(180,50,50,0.1)';
+    statusEl.style.border = '1px solid rgba(220,80,80,0.3)';
+    statusEl.style.color = '#E88080';
+    statusEl.innerHTML = `⚠ Pengiriman email gagal (${err.message}). Silakan cetak halaman ini sebagai PDF dan kirim manual ke dosen.`;
+    document.getElementById('btn-submit').textContent = '✦ Gagal Terkirim';
+  }
+}
+
+// Set tanggal hari ini
+document.addEventListener('DOMContentLoaded', () => {
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('tanggal').value = today;
+});
+</script>
+</body>
+</html>
